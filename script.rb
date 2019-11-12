@@ -18,5 +18,5 @@ client.search_issues(query, page: 1, per_page: 100).items.each do |pr|
 
   cycle_time = pr.closed_at - first_commit.commit.author.date
   puts "Recording cycle time #{cycle_time} for release #{pr.html_url}"
-  #statsd.timing 'release.first_commit', cycle_time*1000 # milliseconds
+  statsd.timing 'release.first_commit', cycle_time*1000 # milliseconds
 end

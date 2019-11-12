@@ -4,7 +4,7 @@ kind: CronJob
 metadata:
   name: frequency-release-metrics
 spec:
-  schedule: "32 * * * *"
+  schedule: "48 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
