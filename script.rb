@@ -6,8 +6,14 @@ require 'active_support'
 require 'active_support/core_ext/numeric'
 require 'datadog/statsd'
 
-statsd = Datadog::Statsd.new(ENV['DD_AGENT_HOST'])
-client = Octokit::Client.new(access_token: ENV['GITHUB_ACCESS_TOKEN'])
+config = {
+  dd_agent_host: ENV['DD_AGENT_HOST'],
+  github_access_token: ENV['GITHUB_ACCESS_TOKEN']
+}
+puts "Starting script with config #{config.map{|k,v| [k, v&.gsub(/.(?<=.{3})/,'*')].join(':') }.join(', ')}"
+
+statsd = Datadog::Statsd.new(config[:dd_agent_host])
+client = Octokit::Client.new(access_token: config[:github_access_token])
 
 t = 1.hour.ago.utc
 query = "org:artsy is:pr is:merged base:release merged:#{t.beginning_of_hour.iso8601}..#{t.end_of_hour.iso8601}"
