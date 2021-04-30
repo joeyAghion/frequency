@@ -2,6 +2,6 @@
 version: '2'
 services:
   frequency:
-    command: ["echo", "no", "tests"]
+    command: ["bundle", "exec", "rake", "spec"]
     build:
       context: ../
