@@ -21,7 +21,7 @@ class DataFreshness
     tag_count: { bucket: 'artsy-cinder-production', prefix: 'builds/TagCount/' },
     user_artwork_suggestions: { bucket: 'artsy-cinder-production', prefix: 'builds/UserArtworkSuggestions/' },
     user_genome: { bucket: 'artsy-cinder-production', prefix: 'builds/UserGenome/' },
-    user_price_preference: { bucket: 'artsy-cinder-production', prefix: 'builds/UserPricePreference/' },
+    user_price_preference: { bucket: 'artsy-cinder-production', prefix: 'builds/UserPricePreference/' }
   }
 
   def self.record_metrics
@@ -46,6 +46,7 @@ class DataFreshness
 
   def s3_client
     @s3_client ||= Aws::S3::Client.new(
+      region: Config.values[:aws_region],
       access_key_id: Config.values[:aws_access_key_id],
       secret_access_key: Config.values[:aws_secret_access_key]
     )
